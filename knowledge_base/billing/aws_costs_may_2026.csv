@@ -1,0 +1,20 @@
+service,resource_name,resource_id,usage_type,region,team,cost_center,may_2026_cost_usd,april_2026_cost_usd,mom_change_usd,mom_change_pct,notes
+Amazon EC2,prod-eks-cluster,eks-0a1b2c3d,BoxUsage:m6i.4xlarge,us-east-1,platform-engineering,CC-PLATFORM,18240.00,17632.00,+608.00,+3.4%,8 worker nodes running payment-service / analytics-service / recommendation-service
+Amazon RDS,payment-rds,db-pay-prod-01,InstanceUsage:db.r6g.2xlarge-MultiAZ,us-east-1,payments-team,CC-PAYMENTS,4180.00,4032.00,+148.00,+3.7%,Multi-AZ PostgreSQL for payment-service; 72% avg CPU
+Amazon RDS,payment-rds,db-pay-prod-01,RDS:StorageUsage-gp3,us-east-1,payments-team,CC-PAYMENTS,230.00,214.00,+16.00,+7.5%,920 GB gp3 storage
+Amazon ElastiCache,redis-cluster,redis-cld-prod,NodeUsage:cache.r6g.large,us-east-1,backend-team,CC-BACKEND,2160.00,2088.00,+72.00,+3.4%,3-node Redis cluster; avg memory utilization only 28% — potential rightsizing target
+Amazon S3,analytics-data-bucket,s3-analytics-prod,StorageUsage-Standard,us-east-1,data-engineering,CC-DATA,1895.20,878.60,+1016.60,+115.7%,SPIKE: 38.2 TB Apr -> 82.4 TB May; caused by analytics-service v2.4 unbounded raw event logging — see INC-2026-031
+Amazon S3,analytics-data-bucket,s3-analytics-prod,S3-Requests-Tier1,us-east-1,data-engineering,CC-DATA,218.40,96.20,+122.20,+127.0%,PUT/COPY surge from high-frequency clickstream writes post-deployment
+Amazon S3,logs-backup-bucket,s3-logs-backup,StorageUsage-Standard,us-east-1,security-ops,CC-SECOPS,570.40,508.30,+62.10,+12.2%,No lifecycle policy; objects accumulating since 2023-01-08; ~11% MoM growth
+Amazon S3,logs-backup-bucket,s3-logs-backup,StorageUsage-StandardIA,us-east-1,security-ops,CC-SECOPS,123.80,110.40,+13.40,+12.1%,Infrequent-access tier; last bulk access 2026-02-14
+Amazon S3,customer-media-bucket,s3-media-prod,StorageUsage-IntelligentTiering,us-east-1,product-team,CC-PRODUCT,398.50,366.20,+32.30,+8.8%,Lifecycle policy active; compliant with storage governance policy
+AWS Data Transfer,analytics-data-bucket,s3-analytics-prod,DataTransfer-Out-Bytes,us-east-1,data-engineering,CC-DATA,3240.00,2860.00,+380.00,+13.3%,Egress spike from reprocessing jobs triggered by analytics-service v2.4 backfill
+Amazon CloudWatch,cloudwatch-metrics,*,CW:MetricMonitorUsage,us-east-1,platform-engineering,CC-PLATFORM,620.40,589.00,+31.40,+5.3%,Custom metrics across all three services
+Amazon CloudWatch,cloudwatch-logs,*,CW:LogsStorage,us-east-1,platform-engineering,CC-PLATFORM,584.60,540.20,+44.40,+8.2%,Log ingestion from prod-eks-cluster pods
+Amazon ECR,container-registry,ecr-cloudshop,ECR:StorageUsage,us-east-1,platform-engineering,CC-PLATFORM,184.20,162.40,+21.80,+13.4%,Images for payment-service / analytics-service / recommendation-service
+AWS Lambda,event-processors,*,Lambda:Request,us-east-1,backend-team,CC-BACKEND,210.00,198.00,+12.00,+6.1%,Inventory and notification event handlers
+Amazon Route 53,dns-zones,*,Route53:HostedZone,us-east-1,platform-engineering,CC-PLATFORM,24.00,24.00,0.00,0.0%,cloudshop.internal + cloudshop.com hosted zones
+AWS WAF,prod-waf-acl,*,WAF:WebACL,us-east-1,security-ops,CC-SECOPS,180.00,180.00,0.00,0.0%,WAF protecting prod-eks-cluster ALB ingress
+AWS Secrets Manager,secrets-prod,*,SecretsManager:Secret,us-east-1,platform-engineering,CC-PLATFORM,98.40,92.40,+6.00,+6.5%,DB credentials / API keys for all services
+Amazon SNS,notification-topics,*,SNS:Requests,us-east-1,backend-team,CC-BACKEND,42.80,38.20,+4.60,+12.0%,Order and payment event notifications
+Amazon SQS,task-queues,*,SQS:Requests,us-east-1,backend-team,CC-BACKEND,38.40,34.80,+3.60,+10.3%,Async job queues for recommendation-service

@@ -1,0 +1,177 @@
+{
+  "CloudWatchAlarms": [
+    {
+      "AlarmName": "S3-StorageCostAnomaly-analytics-data-bucket",
+      "AlarmDescription": "Fires when estimated daily S3 storage cost for analytics-data-bucket exceeds threshold. This alarm was triggered on 2026-05-12 at 08:47 UTC, initiating INC-2026-031. Threshold was subsequently lowered from $150/day to $80/day as a remediation action.",
+      "AWSAccountId": "123456789012",
+      "Region": "us-east-1",
+      "Namespace": "AWS/S3",
+      "MetricName": "BucketSizeBytes",
+      "Dimensions": [
+        { "Name": "BucketName", "Value": "analytics-data-bucket" },
+        { "Name": "StorageType", "Value": "StandardStorage" }
+      ],
+      "Period": 86400,
+      "EvaluationPeriods": 1,
+      "DatapointsToAlarm": 1,
+      "Threshold": 80.00,
+      "ThresholdUnit": "USD_per_day_estimated",
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": [
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-oncall-alerts",
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-finops-alerts"
+      ],
+      "OKActions": [
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-oncall-alerts"
+      ],
+      "State": "OK",
+      "LastStateChange": "2026-05-14T16:40:00Z",
+      "FirstTriggered": "2026-05-12T08:47:00Z",
+      "PreviousThreshold": 150.00,
+      "ThresholdChangedDate": "2026-05-15",
+      "ThresholdChangedBy": "marcos.rivera@cloudshop.com",
+      "RelatedIncident": "INC-2026-031",
+      "RelatedDeployment": "DEPLOY-2026-089",
+      "Tags": {
+        "team": "platform-engineering",
+        "cost-center": "CC-PLATFORM",
+        "environment": "production",
+        "managed-by": "terraform"
+      }
+    },
+    {
+      "AlarmName": "S3-StorageGrowthRate-logs-backup-bucket",
+      "AlarmDescription": "Fires when logs-backup-bucket BucketSizeBytes growth exceeds 10% week-over-week. This bucket has no lifecycle policy and is growing at approximately 11% per month. No incident yet raised but INFRA-4440 is tracking remediation. See storage governance policy section 4.1.",
+      "AWSAccountId": "123456789012",
+      "Region": "us-east-1",
+      "Namespace": "AWS/S3",
+      "MetricName": "BucketSizeBytes",
+      "Dimensions": [
+        { "Name": "BucketName", "Value": "logs-backup-bucket" },
+        { "Name": "StorageType", "Value": "StandardStorage" }
+      ],
+      "Period": 604800,
+      "EvaluationPeriods": 1,
+      "DatapointsToAlarm": 1,
+      "Threshold": 10.0,
+      "ThresholdUnit": "percent_weekly_growth",
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": [
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-finops-alerts"
+      ],
+      "State": "ALARM",
+      "LastStateChange": "2026-05-19T07:00:00Z",
+      "RelatedTicket": "INFRA-4440",
+      "Tags": {
+        "team": "security-ops",
+        "cost-center": "CC-SECOPS",
+        "environment": "production",
+        "managed-by": "terraform"
+      }
+    },
+    {
+      "AlarmName": "ElastiCache-LowMemoryUtilization-redis-cluster",
+      "AlarmDescription": "Fires when redis-cluster average memory utilization falls below 40% for 7 consecutive days, indicating over-provisioning. Current 30-day average is 28%. Potential rightsizing from cache.r6g.large (3 nodes) to cache.r6g.medium (3 nodes) would save approximately $720/month.",
+      "AWSAccountId": "123456789012",
+      "Region": "us-east-1",
+      "Namespace": "AWS/ElastiCache",
+      "MetricName": "DatabaseMemoryUsagePercentage",
+      "Dimensions": [
+        { "Name": "CacheClusterId", "Value": "redis-cld-prod" }
+      ],
+      "Period": 86400,
+      "EvaluationPeriods": 7,
+      "DatapointsToAlarm": 7,
+      "Threshold": 40.0,
+      "ThresholdUnit": "percent",
+      "ComparisonOperator": "LessThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": [
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-finops-alerts"
+      ],
+      "State": "ALARM",
+      "LastStateChange": "2026-05-20T07:00:00Z",
+      "CurrentAvgUtilization30Day": "28%",
+      "RecommendedAction": "Rightsize to cache.r6g.medium — estimated monthly savings $720",
+      "RelatedTicket": "INFRA-4452",
+      "Tags": {
+        "team": "backend-team",
+        "cost-center": "CC-BACKEND",
+        "environment": "production",
+        "managed-by": "terraform"
+      }
+    },
+    {
+      "AlarmName": "RDS-HighCPU-payment-rds",
+      "AlarmDescription": "Fires when payment-rds CPUUtilization exceeds 85% for 10 consecutive minutes. payment-service depends on this Multi-AZ db.r6g.2xlarge PostgreSQL instance. Sustained high CPU may indicate query optimization opportunity or need for read replica.",
+      "AWSAccountId": "123456789012",
+      "Region": "us-east-1",
+      "Namespace": "AWS/RDS",
+      "MetricName": "CPUUtilization",
+      "Dimensions": [
+        { "Name": "DBInstanceIdentifier", "Value": "db-pay-prod-01" }
+      ],
+      "Period": 300,
+      "EvaluationPeriods": 2,
+      "DatapointsToAlarm": 2,
+      "Threshold": 85.0,
+      "ThresholdUnit": "percent",
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": [
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-oncall-alerts",
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-payments-alerts"
+      ],
+      "State": "OK",
+      "LastStateChange": "2026-05-09T03:22:00Z",
+      "CurrentAvgUtilization30Day": "72%",
+      "Tags": {
+        "team": "payments-team",
+        "cost-center": "CC-PAYMENTS",
+        "environment": "production",
+        "managed-by": "terraform"
+      }
+    },
+    {
+      "AlarmName": "S3-NullLifecyclePolicy-Compliance",
+      "AlarmDescription": "Custom Config Rule alarm. Fires when any S3 bucket in account 123456789012 is detected without a lifecycle policy. Currently IN ALARM for: analytics-data-bucket (remediated 2026-05-14 — alarm clearing in progress), logs-backup-bucket (open — INFRA-4440). Governed by storage governance policy section 4.1.",
+      "AWSAccountId": "123456789012",
+      "Region": "us-east-1",
+      "Namespace": "CloudShop/Compliance",
+      "MetricName": "BucketsWithoutLifecyclePolicy",
+      "Dimensions": [],
+      "Period": 86400,
+      "EvaluationPeriods": 1,
+      "DatapointsToAlarm": 1,
+      "Threshold": 0,
+      "ThresholdUnit": "count",
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "breaching",
+      "AlarmActions": [
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-finops-alerts",
+        "arn:aws:sns:us-east-1:123456789012:cloudshop-secops-alerts"
+      ],
+      "State": "ALARM",
+      "LastStateChange": "2026-05-14T14:10:00Z",
+      "BucketsInViolation": ["logs-backup-bucket"],
+      "BucketsRecentlyRemediated": ["analytics-data-bucket"],
+      "Tags": {
+        "team": "platform-engineering",
+        "cost-center": "CC-PLATFORM",
+        "environment": "production",
+        "managed-by": "terraform"
+      }
+    }
+  ],
+  "SNSTopics": {
+    "cloudshop-oncall-alerts": "arn:aws:sns:us-east-1:123456789012:cloudshop-oncall-alerts",
+    "cloudshop-finops-alerts": "arn:aws:sns:us-east-1:123456789012:cloudshop-finops-alerts",
+    "cloudshop-payments-alerts": "arn:aws:sns:us-east-1:123456789012:cloudshop-payments-alerts",
+    "cloudshop-secops-alerts": "arn:aws:sns:us-east-1:123456789012:cloudshop-secops-alerts"
+  },
+  "LastUpdated": "2026-05-30T00:00:00Z",
+  "ManagedBy": "terraform",
+  "ConfigSource": "infrastructure/cloudwatch_alarms.tf"
+}

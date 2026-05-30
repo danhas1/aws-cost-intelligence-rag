@@ -1,0 +1,29 @@
+billing_period,service,resource_id,resource_name,usage_type,region,linked_account,team,cost_center,amount_usd,unit,quantity,notes
+2026-04,Amazon EC2,i-0a1b2c3d4e5f60001,prod-eks-node-group-1,BoxUsage:m6i.2xlarge,us-east-1,123456789012,platform-engineering,CC-PLATFORM,12384.00,USD,928 instance-hours,EKS node group for prod workloads
+2026-04,Amazon EC2,i-0a1b2c3d4e5f60002,prod-eks-node-group-2,BoxUsage:m6i.2xlarge,us-east-1,123456789012,platform-engineering,CC-PLATFORM,12384.00,USD,928 instance-hours,EKS node group for prod workloads
+2026-04,Amazon EC2,i-0a1b2c3d4e5f60003,staging-eks-node-group-1,BoxUsage:m6i.xlarge,us-east-1,123456789012,platform-engineering,CC-PLATFORM,4176.00,USD,928 instance-hours,Staging EKS - runs 24/7
+2026-04,Amazon EC2,i-0a1b2c3d4e5f60004,staging-eks-node-group-2,BoxUsage:m6i.xlarge,us-east-1,123456789012,platform-engineering,CC-PLATFORM,4176.00,USD,928 instance-hours,Staging EKS - runs 24/7
+2026-04,Amazon EC2,vol-0a1b2c3d4e5f60010,unattached-ebs-vol-01,EBS:VolumeUsage.gp3,us-east-1,123456789012,unknown,CC-UNKNOWN,24.00,USD,300 GB-months,Unattached since 2026-04-12
+2026-04,Amazon EC2,eipalloc-0a1b2c3d001,unused-eip-01,ElasticIP:IdleAddress,us-east-1,123456789012,unknown,CC-UNKNOWN,3.65,USD,1 IP,Idle Elastic IP
+2026-04,Amazon RDS,db-payment-rds-prod,payment-rds,InstanceUsage:db.r6g.2xlarge,us-east-1,123456789012,payments-team,CC-PAYMENTS,9532.80,USD,696 instance-hours,Multi-AZ RDS for payment-service
+2026-04,Amazon RDS,db-payment-rds-prod,payment-rds,RDS:StorageUsage,us-east-1,123456789012,payments-team,CC-PAYMENTS,880.00,USD,1910 GB-months,gp3 storage
+2026-04,Amazon RDS,db-analytics-rds-prod,analytics-rds,InstanceUsage:db.r6g.4xlarge,us-east-1,123456789012,data-engineering,CC-DATA,13766.40,USD,696 instance-hours,Analytics RDS
+2026-04,Amazon RDS,db-analytics-rds-prod,analytics-rds,RDS:StorageUsage,us-east-1,123456789012,data-engineering,CC-DATA,1290.00,USD,2800 GB-months,gp3 storage
+2026-04,Amazon ElastiCache,redis-cluster-prod,redis-cluster,NodeUsage:cache.r6g.xlarge,us-east-1,123456789012,backend-team,CC-BACKEND,3132.00,USD,696 node-hours,Redis cluster for caching layer
+2026-04,Amazon S3,analytics-data-bucket,analytics-data-bucket,S3:StorageUsage-Standard,us-east-1,123456789012,data-engineering,CC-DATA,1779.40,USD,24714 GB-months,Normal growth trajectory
+2026-04,Amazon S3,analytics-data-bucket,analytics-data-bucket,S3:Requests-Tier1,us-east-1,123456789012,data-engineering,CC-DATA,62.80,USD,3140000 requests,PUT/COPY/POST requests
+2026-04,Amazon S3,logs-backup-bucket,logs-backup-bucket,S3:StorageUsage-Standard,us-east-1,123456789012,security-ops,CC-SECOPS,1620.00,USD,22500 GB-months,No lifecycle policy
+2026-04,Amazon S3,logs-backup-bucket,logs-backup-bucket,S3:StorageUsage-StandardIA,us-east-1,123456789012,security-ops,CC-SECOPS,287.50,USD,9200 GB-months,Infrequent access tier
+2026-04,Amazon S3,customer-media-bucket,customer-media-bucket,S3:StorageUsage-Standard,us-east-1,123456789012,product-team,CC-PRODUCT,860.40,USD,11950 GB-months,Product images and media
+2026-04,Amazon S3,customer-media-bucket,customer-media-bucket,S3:StorageUsage-Intelligent-Tiering,us-east-1,123456789012,product-team,CC-PRODUCT,246.60,USD,8220 GB-months,Auto-tiered media objects
+2026-04,AWS Data Transfer,*,cross-region-transfer,DataTransfer-Out-Bytes,us-east-1,123456789012,data-engineering,CC-DATA,1860.00,USD,186000 GB,Outbound data transfer
+2026-04,AWS Data Transfer,*,cloudfront-origin,DataTransfer-Regional,us-east-1,123456789012,product-team,CC-PRODUCT,1740.00,USD,174000 GB,CloudFront to S3 origin transfer
+2026-04,Amazon CloudWatch,*,cloudwatch-metrics,CW:MetricMonitorUsage,us-east-1,123456789012,platform-engineering,CC-PLATFORM,589.00,USD,5890 metrics,Custom metric ingestion
+2026-04,Amazon CloudWatch,*,cloudwatch-logs,CW:LogsStorage,us-east-1,123456789012,platform-engineering,CC-PLATFORM,540.20,USD,5402 GB,Log storage and ingestion
+2026-04,AWS Lambda,*,lambda-functions,Lambda:Request,us-east-1,123456789012,backend-team,CC-BACKEND,198.00,USD,198000000 requests,Various Lambda functions
+2026-04,Amazon Route 53,*,dns-hosted-zones,Route53:HostedZone,us-east-1,123456789012,platform-engineering,CC-PLATFORM,24.00,USD,24 zones,DNS management
+2026-04,AWS WAF,*,waf-web-acl,WAF:WebACL,us-east-1,123456789012,security-ops,CC-SECOPS,180.00,USD,3 ACLs,Web Application Firewall
+2026-04,Amazon ECR,*,container-registry,ECR:StorageUsage,us-east-1,123456789012,platform-engineering,CC-PLATFORM,162.40,USD,1624 GB,Container image storage
+2026-04,AWS Secrets Manager,*,secrets-manager,SecretsManager:Secret,us-east-1,123456789012,platform-engineering,CC-PLATFORM,92.40,USD,77 secrets,Secrets rotation and storage
+2026-04,Amazon SNS,*,sns-topics,SNS:Requests,us-east-1,123456789012,backend-team,CC-BACKEND,38.20,USD,7640000 requests,Notification service
+2026-04,Amazon SQS,*,sqs-queues,SQS:Requests,us-east-1,123456789012,backend-team,CC-BACKEND,34.80,USD,34800000 requests,Message queuing
