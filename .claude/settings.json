@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /Users/danhason/dataKnowladge/knowledge_base/architecture /Users/danhason/dataKnowladge/knowledge_base/adrs /Users/danhason/dataKnowladge/knowledge_base/jira /Users/danhason/dataKnowladge/knowledge_base/slack /Users/danhason/dataKnowladge/knowledge_base/incidents /Users/danhason/dataKnowladge/knowledge_base/migrations /Users/danhason/dataKnowladge/knowledge_base/runbooks)"
+    ],
+    "additionalDirectories": [
+      "/Users/danhason/dataKnowladge/knowledge_base"
+    ]
+  }
+}
